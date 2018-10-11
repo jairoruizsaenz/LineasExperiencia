@@ -15,6 +15,7 @@ Grupo 2:
 - Diego Andrés Triviño González
 
 Universidad de los Andes
+
 Mejoramiento de la experiencia de usuario
 
 Ver resultados [aquí](https://jairoruizsaenz.github.io/LineasExperiencia/).
