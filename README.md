@@ -1,14 +1,24 @@
-# ¿Sabes en que películas aparecen tus actores favoritos?
-## Películas, directores, actores y sus conexiones
+# Líneas de Experiencia
+## Acceso a la Educación - Actividades extracurriculares para niños
 
-Usando la base de datos de películas disponible en [Kaggle](https://www.kaggle.com/tmdb/tmdb-movie-metadata) junto a información adicional del portal [IMDb](http://www.imdb.com/), se crea un diagrama de redes, en el que podrás encontrar relaciones entre películas, su director y los actores principales que aparecen en ella. 
+Como herramienta de análisis para entender la experiencia de usuario durante el proceso (antes, durante y después) de realizar la inscripción de su hijo en activiades extracurriculares, procedimos a realizar 3 entrevistas las cuales nos permitieron evaluar la experiencia en las etapas mencionadas teniendo en cuenta 11 valores, los cuales fueron calificados en una escalada numérica de 1 a 5, siendo:
 
-- ¿Sábes cuando se lanzaron tus películas favoritas y sus secuelas?
-- ¿Conoces los nombres de los actores que conectan diversas películas?
-- Ser actor y director en la misma película, ¿será posible?
+1 - Insatisfecho
+2 - Poco satisfecho
+3 - Indiferente
+4 - Satisfecho
+5 - Muy satisfecho
 
-Podrás aclarar estas y otras pregúntas interactuando con el diagrama de redes.
+Grupo 2: 
 
-[!["gif de la aplicación real"](resources/img/Peliculas2.gif)](https://jairoruizsaenz.github.io/Relaciones-Peliculas/)
+- Juan Camilo Bustamante Atehortua
+- Oscar Daniel Garcia Villamil
+- Taidy Johana Marrugo Simancas
+- Nicolas Ricardo Robles Vargas
+- Jairo Andres Ruiz Saenz
+- Diego Andrés Triviño González
 
-Visita el Demo [aquí](https://jairoruizsaenz.github.io/Relaciones-Peliculas/).
+Universidad de los Andes
+Mejoramiento de la experiencia de usuario
+
+Ver resultados [aquí](https://jairoruizsaenz.github.io/LineasExperiencia/).
