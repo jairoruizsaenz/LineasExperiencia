@@ -14,7 +14,7 @@ firstCell.forEach(function(d){
 });
 
 // get parallel coordinates
-graph = d3.parcoords()('#wrapper_03')
+graph = d3.parcoords()('#wrapper_01')
 	.data(data)
 		.margin({ top: 30, left: 3 * textLength, bottom: 40, right: 0 })
 		.alpha(0.6)
@@ -25,7 +25,7 @@ graph = d3.parcoords()('#wrapper_03')
 		.interactive();
 
 //add hover event
-d3.select("#wrapper_03 svg")
+d3.select("#wrapper_01 svg")
 	.on("mousemove", function() {
 	    var mousePosition = d3.mouse(this);			    
 	    highlightLineOnClick(mousePosition, true); //true will also add tooltip
