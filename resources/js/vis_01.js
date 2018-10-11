@@ -1,5 +1,7 @@
-var color_set = d3.scale.linear()
-	.range(["#3182bd", "#f33"]);
+//basado en: http://blockbuilder.org/mostaphaRoudsari/b4e090bb50146d88aec4
+var color_set = d3.scale.ordinal()
+	.range(["#a6cee3", "#1f78b4", "#b2df8a", "#33a02c", "#fb9a99","#e31a1c", "#fdbf6f", "#ff7f00", "#cab2d6", "#6a3d9a", "#efef3b"]);
+	//.domain([1,2,3,4,5,6,7,8,9,10,11]);
 
 // load default chart
 d3.csv("resources/data/data_01.csv", function(data){
@@ -11,7 +13,7 @@ var firstCell = data.map(function(d){return d3.values(d)[0]});
 var textLength = 0;
 firstCell.forEach(function(d){
 	if (d.length > textLength) textLength = d.length;
-});
+});	
 
 // get parallel coordinates
 graph = d3.parcoords()('#wrapper_01')
@@ -21,9 +23,13 @@ graph = d3.parcoords()('#wrapper_01')
 		.mode("queue")
 		.rate(5)
 		.render()
-		.brushMode("1D-axes")
+		.brushMode("1D-axes")  // enable brushing
+		//.reorderable() // I removed this for now as it can mess up with tooltips
 		.interactive();
 
+// set the initial coloring based on the 3rd column
+update_colors(d3.keys(data[0])[0]);
+ 
 //add hover event
 d3.select("#wrapper_01 svg")
 	.on("mousemove", function() {
@@ -38,9 +44,26 @@ d3.select("#wrapper_01 svg")
 });
 
 
+// update color and font weight of chart based on axis selection
+// modified from here: https://syntagmatic.github.io/parallel-coordinates/
+function update_colors(dimension) { 
+	
+	// change color of lines
+	// set domain of color scale
+	var values = graph.data().map(function(d){return parseFloat(d[dimension])}); 
+	//color_set.domain([d3.min(values), d3.max(values)]);
+	
+	// change colors for each line
+	graph.color(function(d){return color_set([d[dimension]])}).render();
+};		
+
+
 // Add highlight for every line on click
 function getCentroids(data){
-
+	// this function returns centroid points for data. I had to change the source
+	// for parallelcoordinates and make compute_centroids public.
+	// I assume this should be already somewhere in graph and I don't need to recalculate it
+	// but I couldn't find it so I just wrote this for now
 	var margins = graph.margin();
 	var graphCentPts = [];
 	
@@ -59,13 +82,15 @@ function getCentroids(data){
 	return graphCentPts;
 }
 
-function getActiveData(){	
+function getActiveData(){
+	// I'm pretty sure this data is already somewhere in graph
 	if (graph.brushed()!=false) return graph.brushed();
 	return graph.data();
 }
 
 function isOnLine(startPt, endPt, testPt, tol){
-	
+	// check if test point is close enough to a line
+	// between startPt and endPt. close enough means smaller than tolerance
 	var x0 = testPt[0];
 	var	y0 = testPt[1];
 	var x1 = startPt[0];
@@ -97,7 +122,7 @@ function findAxes(testPt, cenPts){
 
 function cleanTooltip(){
 	// removes any object under #tooltip is
-	graph.svg.selectAll("#tooltip_01")
+	graph.svg.selectAll("#tooltip")
     	.remove();
 }
 
@@ -124,26 +149,26 @@ function addTooltip(clicked, clickedCenPts){
 	var padding = 2;
 	var rectHeight = fontSize + 2 * padding; //based on font size
 
-	graph.svg.selectAll("rect[id='tooltip_01']")
+	graph.svg.selectAll("rect[id='tooltip']")
         	.data(clickedDataSet).enter()
         	.append("rect")
         	.attr("x", function(d) { return d[0] - d[2].length * 5;})
 			.attr("y", function(d) { return d[1] - rectHeight + 2 * padding; })
 			.attr("rx", "2")
 			.attr("ry", "2")
-			.attr("id", "tooltip_01")
+			.attr("id", "tooltip")
 			.attr("fill", "grey")
 			.attr("opacity", 0.9)
 			.attr("width", function(d){return d[2].length * 10;})
 			.attr("height", rectHeight);
 
 	// add text on top of rectangle
-	graph.svg.selectAll("text[id='tooltip_01']")
+	graph.svg.selectAll("text[id='tooltip']")
     	.data(clickedDataSet).enter()
     		.append("text")
 			.attr("x", function(d) { return d[0];})
 			.attr("y", function(d) { return d[1]; })
-			.attr("id", "tooltip_01")
+			.attr("id", "tooltip")
 			.attr("fill", "white")
 			.attr("text-anchor", "middle")
 			.attr("font-size", fontSize)
